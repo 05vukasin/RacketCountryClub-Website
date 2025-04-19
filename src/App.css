@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  background-color: #F8F6F1;
+  min-height: 100vh;
+  font-family: 'Tenor Sans', sans-serif;
+}
+
+.Hero {
+  padding: 100px 20px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 2px solid #EDEAE0;
+}
+
+.Hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  color: #003B2A;
+  margin-bottom: 20px;
+}
+
+.Hero-subtitle {
+  font-size: 1.2rem;
+  color: #1C1C2D;
+  max-width: 600px;
+}
+
+.Hero-button {
+  margin-top: 30px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #A38B6C;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Hero-button:hover {
+  background-color: #8b7458;
+}

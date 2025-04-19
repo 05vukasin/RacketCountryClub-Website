@@ -1,0 +1,8 @@
+# robots.txt for Racket Country Club
+# Learn more: https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Disallow:
+
+# Sitemap location (update to your actual domain when live)
+Sitemap: https://www.racketcountryclub.com/sitemap.xml

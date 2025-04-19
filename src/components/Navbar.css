@@ -1,0 +1,130 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #EDEAE0;
+    padding: 12px 20px;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .navbar-logo {
+    height: 50px;
+    object-fit: contain;
+  }
+  
+  .navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  
+  .navbar-links li a {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1rem;
+    color: #1C1C2D;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-links li a:hover {
+    color: #A38B6C;
+  }
+  
+  /* HAMBURGER */
+  
+  .hamburger-icon {
+    display: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .hamburger-icon svg {
+    width: 34px;
+    height: 34px;
+    transition: all 0.4s ease;
+  }
+  
+  .hamburger-icon path {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: all 0.4s ease;
+  }
+  
+  .hamburger-icon.active #top-line {
+    transform: translateY(10px) rotate(45deg) scale(0.9);
+  }
+  
+  .hamburger-icon.active #bottom-line {
+    transform: translateY(-10px) rotate(-45deg) scale(0.9);
+  }
+  
+  .hamburger-icon.active #middle-line {
+    opacity: 0;
+  }
+  
+  /* RESPONSIVE */
+  
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-direction: row;
+    }
+  
+    .navbar-links {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      background-color: #FFFFFF;
+      border-top: 1px solid #EDEAE0;
+      max-height: 0;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+  
+    .navbar-links.open {
+      padding: 20px 0;
+      max-height: 300px;
+      opacity: 1;
+      visibility: visible;
+    }
+  
+    .hamburger-icon {
+      display: block;
+    }
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .lang-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .lang-flag {
+    width: 26px;
+    height: auto;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+  }
