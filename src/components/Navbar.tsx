@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/images/logo.png";
 import ukFlag from "../assets/images/uk-flag.png";
@@ -8,8 +9,31 @@ import { useLanguage } from "../context/LanguageContext";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { language, toggleLanguage } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const flag = language === "sr" ? ukFlag : rsFlag;
+
+  const handleNavClick = (href: string) => {
+    if (href.startsWith("#")) {
+      const targetId = href.substring(1);
+
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, 300);
+      } else {
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate(href);
+    }
+
+    setOpen(false);
+  };
 
   return (
     <nav className="navbar">
@@ -19,12 +43,7 @@ const Navbar = () => {
         <ul className={`navbar-links ${open ? "open" : ""}`}>
           {[
             { id: "home", labelSr: "Početna", labelEn: "Home", href: "#home" },
-            {
-              id: "about",
-              labelSr: "O Nama",
-              labelEn: "About",
-              href: "#about",
-            },
+            { id: "about", labelSr: "O Nama", labelEn: "About", href: "#about" },
             {
               id: "membership",
               labelSr: "Članstvo",
@@ -41,8 +60,10 @@ const Navbar = () => {
             <li key={id}>
               <a
                 href={href}
-                onClick={() => setOpen(false)}
-                {...(href.startsWith("/") ? { target: "_self" } : {})}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(href);
+                }}
               >
                 {language === "sr" ? labelSr : labelEn}
               </a>

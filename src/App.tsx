@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+
 import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import AboutSection from './components/AboutSection';
-import MembershipSection from './components/MembershipSection';
 import Footer from './components/Footer';
 import Preloader from './components/Preloader';
+
+import HomePage from './pages/HomePage';
+import ShopPage from './shop/page';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Učitaj sve slike iz HeroSection
     const imagePaths = [
       require('./assets/images/image-1.jpg'),
       require('./assets/images/image-2.jpg'),
       require('./assets/images/image-3.jpg'),
       require('./assets/images/image-5.jpg'),
-      require('./assets/images/image-6.jpg')
+      require('./assets/images/image-6.jpg'),
     ];
 
     const preloadImages = imagePaths.map(
@@ -30,24 +31,21 @@ const App = () => {
     );
 
     Promise.all(preloadImages).then(() => {
-      setTimeout(() => setLoading(false), 800); // mala pauza radi efekta
+      setTimeout(() => setLoading(false), 800);
     });
   }, []);
 
+  if (loading) return <Preloader />;
+
   return (
-    <>
-      {loading ? (
-        <Preloader />
-      ) : (
-        <div className="App">
-          <Navbar />
-          <HeroSection />
-          <AboutSection />
-          <MembershipSection />
-          <Footer />
-        </div>
-      )}
-    </>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<ShopPage />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 };
 
