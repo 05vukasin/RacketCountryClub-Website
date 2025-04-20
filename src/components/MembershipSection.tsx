@@ -6,19 +6,49 @@ const MembershipSection = () => {
   const { language } = useLanguage();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Zahtev poslat:', { email, phone });
-    alert(language === 'sr'
-      ? 'Vaš zahtev je poslat. Hvala na interesovanju!'
-      : 'Your request has been submitted. Thank you!');
-    setEmail('');
-    setPhone('');
+
+    try {
+      const response = await fetch('https://racketcountryclubbackend-1081514700612.us-central1.run.app/api/member', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          phoneNumber: phone
+        }),
+      });
+
+      if (response.ok) {
+        setShowSuccess(true);
+        setEmail('');
+        setPhone('');
+        setTimeout(() => setShowSuccess(false), 6000); // sakrij posle 6 sekundi
+      } else {
+        const error = await response.text();
+        alert(language === 'sr' ? `Greška: ${error}` : `Error: ${error}`);
+      }
+    } catch (err) {
+      alert(language === 'sr'
+        ? 'Greška prilikom slanja zahteva.'
+        : 'An error occurred while submitting your request.');
+    }
   };
 
   return (
     <section className="Membership" id="membership">
+      {showSuccess && (
+        <div className="Membership-success-banner">
+          {language === 'sr'
+            ? '✅ Email je poslat! Proverite i spam folder.'
+            : '✅ Email sent! Please check your spam folder too.'}
+        </div>
+      )}
+
       <div className="Membership-container">
         <h2 className="Membership-title">
           {language === 'sr' ? 'Postani Član' : 'Become a Member'}
