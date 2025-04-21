@@ -34,7 +34,7 @@ const ProductList = () => {
         <div key={product.id} className="ProductCard">
           <img src={product.imageUrl} alt={product.name} />
           <h3>{product.name}</h3>
-          <p className="price">{product.price} €</p>
+          <p className="price">{product.price} </p>
         </div>
       ))}
     </div>

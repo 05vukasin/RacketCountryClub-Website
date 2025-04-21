@@ -7,9 +7,11 @@ const MembershipSection = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await fetch('https://racketcountryclubbackend-1081514700612.us-central1.run.app/api/member', {
@@ -27,7 +29,7 @@ const MembershipSection = () => {
         setShowSuccess(true);
         setEmail('');
         setPhone('');
-        setTimeout(() => setShowSuccess(false), 6000); // sakrij posle 6 sekundi
+        setTimeout(() => setShowSuccess(false), 6000);
       } else {
         const error = await response.text();
         alert(language === 'sr' ? `Greška: ${error}` : `Error: ${error}`);
@@ -36,6 +38,8 @@ const MembershipSection = () => {
       alert(language === 'sr'
         ? 'Greška prilikom slanja zahteva.'
         : 'An error occurred while submitting your request.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,8 +77,10 @@ const MembershipSection = () => {
             onChange={(e) => setPhone(e.target.value)}
             required
           />
-          <button type="submit" className="Membership-button">
-            {language === 'sr' ? 'Pošalji zahtev' : 'Submit Request'}
+          <button type="submit" className="Membership-button" disabled={isLoading}>
+            {isLoading
+              ? language === 'sr' ? 'Slanje...' : 'Sending...'
+              : language === 'sr' ? 'Pošalji zahtev' : 'Submit Request'}
           </button>
         </form>
       </div>
